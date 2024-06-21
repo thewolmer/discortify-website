@@ -5,6 +5,7 @@ import { env } from '@/env';
 
 export async function GET(req: NextRequest) {
   const state = req.nextUrl.searchParams.get('id');
+  if (!state) return NextResponse.json({ error: 'Invalid state' }, { status: 400 });
   const scope = 'user-read-email user-top-read playlist-read-private';
   const redirectUri = env.SPOTIFY_REDIRECT_URI;
   const clientId = env.SPOTIFY_CLIENT;

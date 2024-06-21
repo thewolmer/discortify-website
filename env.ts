@@ -9,6 +9,7 @@ const envSchema = z.object({
   SPOTIFY_CLIENT: z.string().min(1),
   SPOTIFY_CLIENT_SECRET: z.string().min(1),
   SPOTIFY_REDIRECT_URI: z.string().min(1),
+  DISCORTIFY_API_KEY: z.string().min(1),
 });
 
 export const env = envSchema.parse(process.env);

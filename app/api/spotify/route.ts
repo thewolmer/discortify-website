@@ -3,6 +3,8 @@ import qs from 'query-string';
 
 import { env } from '@/env';
 
+export const revalidate = 0;
+
 export async function GET(req: NextRequest) {
   const state = req.nextUrl.searchParams.get('id');
   if (!state) return NextResponse.json({ error: 'Invalid state' }, { status: 400 });
@@ -20,15 +22,6 @@ export async function GET(req: NextRequest) {
       state: state,
     },
   });
-
-  // `https://accounts.spotify.com/authorize?` +
-  // qs.stringify({
-  //   response_type: 'code',
-  //   client_id: clientId,
-  //   scope: scope,
-  //   redirect_uri: redirectUri,
-  //   state: state,
-  // });
 
   return NextResponse.redirect(spotifyAuthUrl);
 }

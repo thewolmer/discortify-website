@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { env } from '@/env';
 import db from '@/lib/db';
 
+export const revalidate = 0;
+
 export async function POST(req: NextRequest) {
   const headers = new Headers(req.headers);
   const api_key = headers.get('X-API-KEY');

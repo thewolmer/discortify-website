@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { env } from '@/env';
 import db from '@/lib/db';
+
+import { env } from '@/env';
 
 export const revalidate = 0;
 
@@ -19,41 +20,36 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
     }
 
-    try {
-      const response = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        headers: {
-          Authorization: `Basic ${Buffer.from(`${env.SPOTIFY_CLIENT}:${env.SPOTIFY_CLIENT_SECRET}`).toString('base64')}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${Buffer.from(`${env.SPOTIFY_CLIENT}:${env.SPOTIFY_CLIENT_SECRET}`).toString('base64')}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token,
+      }).toString(),
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      const updatedUser = await db.user.update({
+        where: { id },
+        data: {
+          spotify_access_token: data.access_token,
+          ...(data.refresh_token && { spotify_refresh_token: data.refresh_token }),
+          spotify_token_expires: new Date(Date.now() + data.expires_in * 1000),
         },
-        body: new URLSearchParams({
-          grant_type: 'refresh_token',
-          refresh_token,
-        }).toString(),
       });
-
-      const data = await response.json();
-
-      if (response.status === 200) {
-        const updatedUser = await db.user.update({
-          where: { id },
-          data: {
-            spotify_access_token: data.access_token,
-            spotify_refresh_token: data.refresh_token,
-            spotify_token_expires: new Date(Date.now() + data.expires_in * 1000),
-          },
-        });
-        return NextResponse.json({ updatedUser }, { status: 200 });
-      } else {
-        console.error('Spotify token refresh failed', data);
-        throw new Error('Failed to refresh spotify access token');
-      }
-    } catch (e) {
-      console.error(e);
-      return NextResponse.json({ error: 'Failed to refresh spotify access token' }, { status: 400 });
+      return NextResponse.json({ updatedUser }, { status: 200 });
+    } else {
+      console.error('Spotify token refresh failed', data);
+      throw new Error('Failed to refresh spotify access token');
     }
-  } catch (error) {
-    console.error('Request error', error);
+  } catch (e) {
+    console.error('Request error', e);
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   }
 }

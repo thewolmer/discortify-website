@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import qs from 'query-string';
 
-import { env } from '@/env';
 import db from '@/lib/db';
 import { DiscordLookup } from '@/lib/DiscordLookup';
 import { getUserProfile } from '@/lib/Spotify/userProfile';
+
+import { env } from '@/env';
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get('code') || null;
@@ -34,8 +35,10 @@ export async function GET(req: NextRequest) {
       },
     );
     const tokenData = await tokenResponse.json();
-    const discordUser = await DiscordLookup(state);
-    const spotifyUser = await getUserProfile(tokenData.access_token);
+    const [discordUser, spotifyUser] = await Promise.all([
+      DiscordLookup(state),
+      getUserProfile(tokenData.access_token),
+    ]);
     if (!spotifyUser?.display_name) {
       throw new Error('Failed to fetch spotify user data');
     }

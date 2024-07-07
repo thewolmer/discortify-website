@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { id, refresh_token } = body;
     if (!refresh_token || !id) {
-      return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid request: Missing refresh_token or id in body' }, { status: 400 });
     }
 
     const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
           spotify_token_expires: new Date(Date.now() + data.expires_in * 1000),
         },
       });
-      return NextResponse.json({ updatedUser }, { status: 200 });
+      return NextResponse.json({ ...updatedUser }, { status: 200 });
     } else {
       console.error('Spotify token refresh failed', data);
       throw new Error('Failed to refresh spotify access token');

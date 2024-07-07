@@ -17,11 +17,11 @@
     "release": "commit-and-tag-version",
     "push": "git push --follow-tags origin main",
     "lint": "next lint",
-    "test": "npx tsx scripts/detectCircularDependencies.ts"
+    "test": "npx tsx scripts/detectCircularDependencies.ts",
+    "download:secrets": "doppler secrets download --no-file --format=env > .env"
   },
   "dependencies": {
     "@prisma/client": "5.15.1",
-    "all": "",
     "clsx": "^2.1.1",
     "framer-motion": "^11.1.7",
     "next": "14.2.3",
@@ -29,6 +29,7 @@
     "query-string": "^9.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^5.2.1",
     "tailwind-merge": "^2.3.0",
     "zod": "^3.23.8"
   },

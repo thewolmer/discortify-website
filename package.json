@@ -18,7 +18,7 @@
     "push": "git push --follow-tags origin main",
     "lint": "next lint",
     "test": "npx tsx scripts/detectCircularDependencies.ts",
-    "download:secrets": "doppler secrets download --no-file --format=env > .env"
+    "download:secrets": "doppler secrets download --project=personal-discortify-website --config=dev --no-file --format=env > .env"
   },
   "dependencies": {
     "@prisma/client": "5.15.1",

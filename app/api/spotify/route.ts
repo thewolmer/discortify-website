@@ -8,7 +8,7 @@ export const revalidate = 0;
 export async function GET(req: NextRequest) {
   const state = req.nextUrl.searchParams.get('id');
   if (!state) return NextResponse.json({ error: 'Invalid state' }, { status: 400 });
-  const scope = 'user-read-email user-top-read playlist-read-private';
+  const scope = 'user-read-email user-top-read playlist-read-private user-read-recently-played';
   const redirectUri = env.SPOTIFY_REDIRECT_URI;
   const clientId = env.SPOTIFY_CLIENT;
 

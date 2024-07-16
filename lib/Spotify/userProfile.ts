@@ -1,4 +1,4 @@
-import { SpotifyUser } from '@/types/Spotify/User';
+import type { SpotifyUser } from '@/types/Spotify/User';
 
 export const getUserProfile = async (token: string): Promise<SpotifyUser> => {
   await new Promise((resolve) => setTimeout(resolve, 2500));

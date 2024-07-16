@@ -1,66 +1,53 @@
 {
-  "name": "template",
-  "version": "0.1.0",
-  "private": true,
-  "engines": {
-    "npm": "^10.4.0",
-    "node": "^18.18.0"
-  },
-  "scripts": {
-    "dev": "next dev",
-    "postinstall": "prisma generate",
-    "turbo": "next dev --turbo",
-    "build": "next build",
-    "postbuild": "next-sitemap --config next-sitemap.config.js",
-    "start": "node server.js",
-    "commit": "git-cz",
-    "release": "commit-and-tag-version",
-    "push": "git push --follow-tags origin main",
-    "lint": "next lint",
-    "test": "npx tsx scripts/detectCircularDependencies.ts",
-    "download:secrets": "doppler secrets download --project=personal-discortify-website --config=dev --no-file --format=env > .env"
-  },
-  "dependencies": {
-    "@prisma/client": "5.15.1",
-    "clsx": "^2.1.1",
-    "framer-motion": "^11.1.7",
-    "next": "14.2.3",
-    "prisma": "^5.15.1",
-    "query-string": "^9.0.0",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-icons": "^5.2.1",
-    "tailwind-merge": "^2.3.0",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@next/eslint-plugin-next": "^14.1.0",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
-    "commit-and-tag-version": "^12.2.0",
-    "commitizen": "^4.3.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-react": "^7.33.2",
-    "next-sitemap": "^4.2.3",
-    "postcss": "^8",
-    "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.5.11",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  }
+	"name": "template",
+	"version": "0.1.0",
+	"private": true,
+	"engines": {
+		"npm": "^10.8.1",
+		"node": "^22.4.0"
+	},
+	"scripts": {
+		"dev": "next dev",
+		"postinstall": "prisma generate",
+		"turbo": "next dev --turbo",
+		"build": "next build",
+		"postbuild": "next-sitemap --config next-sitemap.config.js",
+		"start": "node server.js",
+		"commit": "git-cz",
+		"release": "commit-and-tag-version",
+		"push": "git push --follow-tags origin main",
+		"lint": "biome lint .",
+		"download:secrets": "doppler secrets download --project=personal-discortify-website --config=dev --no-file --format=env > .env"
+	},
+	"dependencies": {
+		"@prisma/client": "5.15.1",
+		"clsx": "^2.1.1",
+		"framer-motion": "^11.3.3",
+		"next": "14.2.3",
+		"prisma": "^5.16.2",
+		"query-string": "^9.0.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"react-icons": "^5.2.1",
+		"tailwind-merge": "^2.4.0",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
+		"@types/node": "^20.14.10",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"commit-and-tag-version": "^12.4.1",
+		"commitizen": "^4.3.0",
+		"cz-conventional-changelog": "^3.3.0",
+		"next-sitemap": "^4.2.3",
+		"postcss": "^8.4.39",
+		"tailwindcss": "^3.4.5",
+		"typescript": "^5.5.3"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	}
 }
